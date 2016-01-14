@@ -15,10 +15,10 @@ public:
 	double	getMinTemperture();
 	double	getTemperture();
 	double	getHumidity();
-	string	getCloudstat();
+	int		getClouds();
 	int		getRainPercipitation();
 
-	string* searchLocation(string semiLocationName);
+	string searchLocation(string semiLocationName);
 
 	double 	toFahrenheit(double temperture, TempDegree degree);
 	double 	toCelsius(double temperture, TempDegree degree);

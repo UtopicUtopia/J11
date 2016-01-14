@@ -1,5 +1,7 @@
 #include "Weather.h"
+#include <json\json.h>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 
@@ -25,19 +27,46 @@ double	Weather::getHumidity()
 {
 	return 45.0;	//examdata
 }
-string	Weather::getCloudstat()
+int	Weather::getClouds()
 {
-	string a = "Clean";
-	return a;
+	return 80;
 }
 int		Weather::getRainPercipitation()
 {
 	return 5;	//examdata
 }
-string* Weather::searchLocation(string semiLocationName)
+
+//search location
+string Weather::searchLocation(string semiLocationName)
 {
-	string a[3] = { "Incheon", "Seoul", "Suwon" };
-	return a;	//examdata
+	ifstream listFile("./resource/city.list.json");
+	if (!listFile.is_open())
+	{
+		cerr << "ERROR 001 : file open Error\n";
+		return NULL;
+	}
+	
+	Json::Value root;
+	Json::Reader reader;
+	while (!listFile.eof())
+	{
+		string line;
+		getline(listFile, line);
+		bool parsingSuccessful = reader.parse(line, root);
+		if (!parsingSuccessful)
+		{
+			cerr << "ERROR 002 : json parsing Error\n";
+			return NULL;
+		}
+
+		string cityName = root.get("name", "noname").asString();
+		if (cityName == semiLocationName)
+		{
+			return root.get("_id", "noid").asString();
+		}
+	}
+
+	return NULL;	
 }
 
 //temperture convert
