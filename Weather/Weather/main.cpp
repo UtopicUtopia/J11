@@ -28,7 +28,9 @@ int main()
 	*/
 	string location;
 	cin >> location;
-	cout << w1.searchLocation(location) << endl;
+	//cout << w1.searchLocation(location) << endl;
+
+	w1.getData("incheon");
 
 	return 0;
 }
